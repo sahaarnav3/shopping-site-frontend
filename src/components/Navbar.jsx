@@ -4,7 +4,7 @@ import { FaHeart, FaShoppingCart } from "react-icons/fa";
 
 export default function Navbar({ showsearch }) {
   return (
-    <nav className="navbar border border-2">
+    <nav className="navbar">
       <div className="container-fluid container d-flex justify-content-between align-items-center">
         <div>
           <NavLink className="nav-link navbar-brand" to="/">
