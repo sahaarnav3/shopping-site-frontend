@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
+import { BsFillHeartFill } from "react-icons/bs";
+import { FaHeart, FaShoppingCart } from "react-icons/fa";
 
-export default function Navbar() {
+export default function Navbar({ showsearch }) {
   return (
     <nav className="navbar border border-2">
       <div className="container-fluid container d-flex justify-content-between align-items-center">
@@ -12,26 +14,36 @@ export default function Navbar() {
           </NavLink>
         </div>
         <div>
-          <input
+          { showsearch ? <input
             className="form-control px-5"
             type="search"
-            placeholder="🔍Search"
+            placeholder="🔍 Search"
             aria-label="Search"
-          />
+          /> : ""}
         </div>
-        <div>
-          <button type="button" className="btn btn-light position-relative me-3">
-            <span  style={{"font-size": "25px"}}>🩶</span>
-            <span className="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger my-1">
+        <div className="d-flex">
+          <NavLink className="position-relative me-5" to="/wishlist">
+            <span style={{ "font-size": "30px" }}>
+              <FaHeart className="text-secondary" />
+            </span>
+            <span className="position-absolute bottom-0 start-10 translate-middle badge rounded-pill bg-danger my-3">
               10
             </span>
-          </button>
-          <button type="button" className="btn btn-light position-relative">
+          </NavLink>
+          <NavLink className="position-relative" to="/cart">
+            <span style={{ "font-size": "30px" }}>
+              <FaShoppingCart className="text-secondary" />
+            </span>
+            <span className="position-absolute bottom-0 start-10 translate-middle badge rounded-pill bg-danger my-3">
+              10
+            </span>
+          </NavLink>
+          {/* <button type="button" className="btn btn-light position-relative">
             <span  style={{"font-size": "25px"}}>🛒</span> Cart
             <span className="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger my-1">
               10
             </span>
-          </button>
+          </button> */}
         </div>
       </div>
     </nav>
