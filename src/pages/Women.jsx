@@ -11,7 +11,7 @@ export default function Men() {
           <Filter />
         </section>
         <section className="col-md-9 bg-light rounded px-5 py-4">
-          <h1>Men Page</h1>
+          <h1>Womens Page</h1>
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quo optio
           placeat vel provident dicta labore dignissimos aliquid consequuntur
           quis nemo natus iusto illum autem fugiat, laborum dolorem officia

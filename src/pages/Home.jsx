@@ -22,7 +22,7 @@ export default function Home() {
                 <strong>Men</strong>
               </h5>
             </NavLink>
-            <NavLink className="col-md-3 text-decoration-none position-relative my-3">
+            <NavLink className="col-md-3 text-decoration-none position-relative my-3" to="/women">
               <img
                 src="https://images.unsplash.com/photo-1506152983158-b4a74a01c721"
                 alt="men_banner"
@@ -35,7 +35,7 @@ export default function Home() {
                 <strong>Women</strong>
               </h5>
             </NavLink>
-            <NavLink className="col-md-3 text-decoration-none position-relative my-3">
+            <NavLink className="col-md-3 text-decoration-none position-relative my-3" to="/kids">
               <img
                 src="https://images.unsplash.com/photo-1574681357916-9d4464642696"
                 alt="men_banner"
@@ -48,7 +48,7 @@ export default function Home() {
                 <strong>Kids</strong>
               </h5>
             </NavLink>
-            <NavLink className="col-md-3 text-decoration-none position-relative my-3">
+            <NavLink className="col-md-3 text-decoration-none position-relative my-3" to="/electronics">
               <img
                 src="https://images.unsplash.com/photo-1619644213422-44a8c6f01d4a"
                 alt="men_banner"
