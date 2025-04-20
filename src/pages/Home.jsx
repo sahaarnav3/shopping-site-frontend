@@ -9,7 +9,7 @@ export default function Home() {
         <section className="container py-5">
           <div className="row text-center">
             {/* https://images.unsplash.com/photo-1507680434567-5739c80be1ac?q=80&w=300 you can set width and quality. */}
-            <NavLink className="col-md-3 text-decoration-none position-relative my-3">
+            <NavLink className="col-md-3 text-decoration-none position-relative my-3" to="/men">
               <img
                 src="https://images.unsplash.com/photo-1507680434567-5739c80be1ac"
                 alt="men_banner"

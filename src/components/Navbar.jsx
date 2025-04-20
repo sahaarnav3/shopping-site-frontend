@@ -23,7 +23,7 @@ export default function Navbar({ showsearch }) {
         </div>
         <div className="d-flex">
           <NavLink className="position-relative me-5" to="/wishlist">
-            <span style={{ "font-size": "30px" }}>
+            <span style={{ "fontSize": "30px" }}>
               <FaHeart className="text-secondary" />
             </span>
             <span className="position-absolute bottom-0 start-10 translate-middle badge rounded-pill bg-danger my-3">
@@ -31,7 +31,7 @@ export default function Navbar({ showsearch }) {
             </span>
           </NavLink>
           <NavLink className="position-relative" to="/cart">
-            <span style={{ "font-size": "30px" }}>
+            <span style={{ "fontSize": "30px" }}>
               <FaShoppingCart className="text-secondary" />
             </span>
             <span className="position-absolute bottom-0 start-10 translate-middle badge rounded-pill bg-danger my-3">
