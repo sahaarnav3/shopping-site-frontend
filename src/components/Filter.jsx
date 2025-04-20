@@ -49,7 +49,6 @@ export default function Filter() {
             className="form-check-input"
             type="radio"
             name="ratingRadio"
-            selected
           />
           <label className="form-check-label" for="radioDefault1">
             4 Stars & above
@@ -83,7 +82,6 @@ export default function Filter() {
             className="form-check-input"
             type="radio"
             name="sortByRadio"
-            selected
           />
           <label className="form-check-label" for="radioDefault1">
             Price - Low to High
