@@ -10,7 +10,7 @@ export default function Men() {
   const url =
     "https://shopping-site-backend-mocha.vercel.app/api/products/by-category/men";
   const { finalData } = useFetch(url);
-  const [ filteredData, setFilteredData ] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
 
   return (
     <>
@@ -30,17 +30,17 @@ export default function Men() {
                 </span>
               </>
             ) : (
-              "Loading..."
+              <div className="spinner-border text-secondary" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
             )}
           </h4>
           <div className="row justify-content-between gy-4">
-            {filteredData != null ? (
-              filteredData.map((prodData) => (
-                <ProductCard key={prodData._id} productData={prodData} />
-              ))
-            ) : (
-              ""
-            )}
+            {filteredData != null
+              ? filteredData.map((prodData) => (
+                  <ProductCard key={prodData._id} productData={prodData} />
+                ))
+              : ""}
           </div>
         </section>
       </main>

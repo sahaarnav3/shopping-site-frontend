@@ -1,8 +1,14 @@
 import { NavLink } from "react-router-dom";
 import { BsFillHeartFill } from "react-icons/bs";
 import { FaHeart, FaShoppingCart } from "react-icons/fa";
+import useFetch from "../useFetch";
 
 export default function Navbar({ showsearch }) {
+
+  const api = "https://shopping-site-backend-mocha.vercel.app/api/products/wishlist-items/wishlist";
+  const { finalData } = useFetch(api);
+  // console.log(finalData?.data.product.length);
+
   return (
     <nav className="navbar">
       <div className="container-fluid container d-flex justify-content-between align-items-center">
@@ -27,7 +33,7 @@ export default function Navbar({ showsearch }) {
               <FaHeart className="text-secondary" />
             </span>
             <span className="position-absolute bottom-0 start-10 translate-middle badge rounded-pill bg-danger my-3">
-              10
+              {finalData?.data.product.length}
             </span>
           </NavLink>
           <NavLink className="position-relative" to="/cart">
