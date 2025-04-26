@@ -11,6 +11,7 @@ import Men from "./pages/Men";
 import Women from "./pages/Women";
 import Kids from "./pages/Kids";
 import Electronics from "./pages/Electronics";
+import ProductDetails from "./pages/ProductDetails";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/women" element={<Women />} />
           <Route path="/kids" element={<Kids />} />
           <Route path="/electronics" element={<Electronics />} />
+          <Route path="/product-details/:prodId" element={<ProductDetails />} />
         </Routes>
       </BrowserRouter>
     </ProductProvider>

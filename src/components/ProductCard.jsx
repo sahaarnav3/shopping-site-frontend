@@ -5,6 +5,7 @@ import { useState } from "react";
 export default function ProductCard({ productData }) {
   const [productDetails, setProductDetails] = useState(productData);
 
+  // console.log(productData);
   async function wishlistHandler() {
     setProductDetails({
       ...productDetails,
@@ -53,10 +54,11 @@ export default function ProductCard({ productData }) {
           <h4 className="card-title mb-3">
             <strong>₹{productDetails.finalPrice}</strong>
           </h4>
-          {productDetails.addedToCart.size.length > 0 ? (
+          {productDetails.addedToCart.length > 0 ? (
             <NavLink
               className="nav-link bg-primary text-white py-1 rounded-2 rounded-top-0"
               style={{ width: "100%" }}
+              to="/cart"
             >
               <strong>Go To Cart</strong>
             </NavLink>
@@ -64,6 +66,7 @@ export default function ProductCard({ productData }) {
             <NavLink
               className="nav-link bg-secondary text-white py-1 rounded-2 rounded-top-0"
               style={{ width: "100%" }}
+              to={`/product-details/${productDetails._id}`}
             >
               <strong>Add To Cart</strong>
             </NavLink>
