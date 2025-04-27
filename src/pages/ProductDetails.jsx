@@ -23,6 +23,7 @@ export default function ProductDetails() {
   const productData = finalData?.data.product;
   const [productCount, setProductCount] = useState(1);
   const [sizeSelected, setSizeSelected] = useState("S");
+  const [showAlert, setShowAlert] = useState("");
   // console.log(productData);
 
   async function wishlistHandler() {
@@ -44,11 +45,60 @@ export default function ProductDetails() {
     return starArr;
   }
 
+  async function addToCartHandler() {
+    const url = `https://shopping-site-backend-mocha.vercel.app/api/products/add-to-cart/${productData._id}/${sizeSelected}`;
+    await fetch(url, {
+      method: "POST",
+    })
+      .then((data) => {
+        // console.log(data.status)
+        if (data.status == 200) setShowAlert("true");
+        else setShowAlert("false");
+      })
+      .catch((err) => console.log(err));
+  }
+
+  // function buyNowHandler(){
+  //   addToCartHandler();
+
+  // }
+
   return (
     <>
       <Navbar showsearch={false} />
       <main className="bg-body-tertiary py-4">
         <section className="container bg-white" style={{ width: "75%" }}>
+          {showAlert.length > 0 ? (showAlert === "true" ? (
+            <>
+              <div
+                className="alert alert-success alert-dismissible fade show"
+                role="alert"
+              >
+                <strong>Success!</strong> Product added to cart.
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="alert"
+                  aria-label="Close"
+                ></button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div
+                className="alert alert-danger alert-dismissible fade show"
+                role="alert"
+              >
+                <strong>Failure!</strong> Product Couldn't be added to cart.
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="alert"
+                  aria-label="Close"
+                ></button>
+              </div>
+            </>
+          )) : ""}
           <div className="row p-3">
             {productData ? (
               <>
@@ -83,11 +133,15 @@ export default function ProductDetails() {
                   <div className="d-flex flex-column text-center py-3">
                     <NavLink
                       className="p-2 mb-2 bg-primary text-white text-decoration-none"
+                      onClick={addToCartHandler}
                       to="/cart"
                     >
                       <strong>Buy Now</strong>
                     </NavLink>
-                    <NavLink className="p-2 bg-secondary text-white text-decoration-none">
+                    <NavLink
+                      className="p-2 bg-secondary text-white text-decoration-none"
+                      onClick={addToCartHandler}
+                    >
                       <strong>Add to Cart</strong>
                     </NavLink>
                   </div>
@@ -204,10 +258,22 @@ export default function ProductDetails() {
                   <h4>More items you may like in apparel.</h4>
                   {productData ? (
                     <div className="d-flex py-3 justify-content-between">
-                      <ProductCard key={productData._id} productData={productData} />
-                      <ProductCard key={productData._id} productData={productData} />
-                      <ProductCard key={productData._id} productData={productData} />
-                      <ProductCard key={productData._id} productData={productData} />
+                      <ProductCard
+                        key={productData._id + "1"}
+                        productData={productData}
+                      />
+                      <ProductCard
+                        key={productData._id + "2"}
+                        productData={productData}
+                      />
+                      <ProductCard
+                        key={productData._id + "3"}
+                        productData={productData}
+                      />
+                      <ProductCard
+                        key={productData._id + "4"}
+                        productData={productData}
+                      />
                     </div>
                   ) : (
                     <h4>Loading...</h4>
