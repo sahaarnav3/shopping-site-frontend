@@ -9,8 +9,8 @@ export default function Navbar({ showsearch }) {
   // const api = "https://shopping-site-backend-mocha.vercel.app/api/products/wishlist-items/wishlist";
   // const { finalData } = useFetch(api);
   // console.log(finalData?.data.product.length);
-  const { wishlistItems } = useProductContext();
-  // console.log(wishlistItems);
+  const { wishlistItems, cartItems } = useProductContext();
+  // console.log("navbar cart -", cartItems?.cartItems.length);
 
   return (
     <nav className="navbar">
@@ -44,7 +44,7 @@ export default function Navbar({ showsearch }) {
               <FaShoppingCart className="text-secondary" />
             </span>
             <span className="position-absolute bottom-0 start-10 translate-middle badge rounded-pill bg-danger my-3">
-              10
+              {cartItems?.cartItems.length}
             </span>
           </NavLink>
           {/* <button type="button" className="btn btn-light position-relative">

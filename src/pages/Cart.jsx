@@ -5,7 +5,7 @@ export default function Cart() {
 
   const apiUrl = "https://shopping-site-backend-mocha.vercel.app/api/products/get-cart-items/cart";
   const { finalData } = useFetch(apiUrl);
-  console.log(finalData);
+  // console.log(finalData);
 
   return (
     <>
