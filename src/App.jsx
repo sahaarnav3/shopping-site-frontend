@@ -17,7 +17,7 @@ function App() {
   return (
     <ProductProvider>
       <BrowserRouter>
-        <Routes> 
+        <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/cart" element={<Cart />} />
