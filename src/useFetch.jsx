@@ -14,6 +14,6 @@ const useFetch = (url, initialData) => {
       .catch((error) => setError(error.message))
       .finally(() => setLoading(false));
   }, [url]);
-  return { finalData, loading, error };
+  return { finalData, loading, error, setFinalData };
 };
 export default useFetch;

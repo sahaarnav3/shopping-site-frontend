@@ -3,6 +3,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ProductProvider } from "./contexts/ProductContext";
+import './App.css';
 
 import Home from "./pages/Home";
 import Wishlist from "./pages/Wishlist";
