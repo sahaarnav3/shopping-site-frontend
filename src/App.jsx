@@ -8,11 +8,10 @@ import './App.css';
 import Home from "./pages/Home";
 import Wishlist from "./pages/Wishlist";
 import Cart from "./pages/Cart";
-import Men from "./pages/Men";
-import Women from "./pages/Women";
-import Kids from "./pages/Kids";
-import Electronics from "./pages/Electronics";
+// import Men from "./pages/Men";
+// import Women from "./pages/Women"; this was the initial approach to different pages.
 import ProductDetails from "./pages/ProductDetails";
+import ProductListingPage from "./pages/ProductListingPage";
 
 function App() {
   return (
@@ -22,10 +21,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/men" element={<Men />} />
-          <Route path="/women" element={<Women />} />
-          <Route path="/kids" element={<Kids />} />
-          <Route path="/electronics" element={<Electronics />} />
+          <Route path="/men" element={<ProductListingPage category={"men"} />} />
+          <Route path="/women" element={<ProductListingPage category={"women"} />} />
+          <Route path="/kids" element={<ProductListingPage category={"kids"} />} />
+          <Route path="/electronics" element={<ProductListingPage category={"electronics"} />} />
           <Route path="/product-details/:prodId" element={<ProductDetails />} />
         </Routes>
       </BrowserRouter>

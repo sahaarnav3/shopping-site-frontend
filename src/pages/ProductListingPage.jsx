@@ -5,9 +5,9 @@ import useFetch from "../useFetch";
 import { useState } from "react";
 import ProductCard from "../components/ProductCard";
 
-export default function Men() {
+export default function ProductListingPage({ category }) {
   const url =
-    "https://shopping-site-backend-mocha.vercel.app/api/products/by-category/women";
+    `https://shopping-site-backend-mocha.vercel.app/api/products/by-category/${category}`;
   const { finalData } = useFetch(url);
   const [filteredData, setFilteredData] = useState([]);
   return (
@@ -17,13 +17,12 @@ export default function Men() {
         <section className="col-md-3 py-4 px-5">
           <Filter finalData={finalData} setFilteredData={setFilteredData} />
         </section>
-        <section className="col-md-9 bg-light rounded px-5 py-4">
+        <section className="col-md-9 bg-light rounded px-5 py-4" style={{minHeight: "53rem"}}>
           <h4 className="fw-medium mb-4">
             {finalData != null ? (
               <>
                 <strong>Showing All Products </strong>
                 <span className="fw-medium fs-6">
-                  {" "}
                   ( Showing {filteredData.length} products )
                 </span>
               </>
@@ -33,7 +32,7 @@ export default function Men() {
               </div>
             )}
           </h4>
-          <div className="row justify-content-between gy-4">
+          <div className="row justify-content-between gy-4 px-3">
             {filteredData != null
               ? filteredData.map((prodData) => (
                   <ProductCard key={prodData._id} productData={prodData} />
