@@ -12,6 +12,7 @@ import Cart from "./pages/Cart";
 // import Women from "./pages/Women"; this was the initial approach to different pages.
 import ProductDetails from "./pages/ProductDetails";
 import ProductListingPage from "./pages/ProductListingPage";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/kids" element={<ProductListingPage category={"kids"} />} />
           <Route path="/electronics" element={<ProductListingPage category={"electronics"} />} />
           <Route path="/product-details/:prodId" element={<ProductDetails />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </BrowserRouter>
     </ProductProvider>

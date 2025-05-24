@@ -1,10 +1,10 @@
 import { NavLink } from "react-router-dom";
 import { BsFillHeartFill } from "react-icons/bs";
-import { FaHeart, FaShoppingCart } from "react-icons/fa";
+import { FaHeart, FaShoppingCart, FaUserAlt } from "react-icons/fa";
 // import useFetch from "../useFetch";
 import useProductContext from "../contexts/ProductContext";
 
-export default function Navbar({ showsearch }) {
+export default function Navbar({ showsearch = false }) {
 
   // const api = "https://shopping-site-backend-mocha.vercel.app/api/products/wishlist-items/wishlist";
   // const { finalData } = useFetch(api);
@@ -39,7 +39,7 @@ export default function Navbar({ showsearch }) {
               {wishlistItems?.data.product.length}
             </span>
           </NavLink>
-          <NavLink className="position-relative" to="/cart">
+          <NavLink className="position-relative me-5" to="/cart">
             <span style={{ "fontSize": "30px" }}>
               <FaShoppingCart className="text-secondary" />
             </span>
@@ -47,12 +47,11 @@ export default function Navbar({ showsearch }) {
               {cartItems?.cartItems.length}
             </span>
           </NavLink>
-          {/* <button type="button" className="btn btn-light position-relative">
-            <span  style={{"font-size": "25px"}}>🛒</span> Cart
-            <span className="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger my-1">
-              10
+          <NavLink className="" to="/profile">
+            <span style={{ "fontSize": "30px" }}>
+              <FaUserAlt className="text-secondary" />
             </span>
-          </button> */}
+          </NavLink>
         </div>
       </div>
     </nav>
