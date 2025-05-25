@@ -17,8 +17,38 @@ export default function Profile() {
   const [fetchedAddressData, setFetchedAddressData] = useState([]);
 
   const [showAddressAlert, setShowAddressAlert] = useState("");
+  const [showOrderHistory, setShowOrderHistory] = useState(false);
+  const [orderHistoryData, setOrderHistoryData] = useState([]);
+  const [totalProductPrice, setTotalProductPrice] = useState(0);
+  const [particularOrderData, setParticularOrderData] = useState([]);
 
   // const [renderedData, setRenderedData] = useState();
+
+  useEffect(() => {
+    if (showOrderHistory) {
+      const apiUrl =
+        "https://shopping-site-backend-mocha.vercel.app/api/orders/get-all-orders";
+      fetch(apiUrl)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data) {
+            // setOrderHistoryData(data.orders);
+            setOrderHistoryData(
+              data.orders.map((order) => ({
+                ...order,
+                totalPrice: order.products.reduce(
+                  (acc, curr) => acc + curr.quantity * curr.product.finalPrice,
+                  0
+                ),
+              }))
+            );
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [showOrderHistory]);
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
@@ -51,7 +81,7 @@ export default function Profile() {
       detailedAddress: detailedAddress,
       city: city,
       state: state,
-      defaultAddress: false
+      defaultAddress: false,
     };
     fetch(apiUrl, {
       method: "POST",
@@ -295,7 +325,11 @@ export default function Profile() {
                       ) : (
                         <NavLink
                           className="btn"
-                          style={{ width: "49%", backgroundColor: "black", color: "white" }}
+                          style={{
+                            width: "49%",
+                            backgroundColor: "black",
+                            color: "white",
+                          }}
                           onClick={() =>
                             setAsDefaultAddressHandler(address._id)
                           }
@@ -369,7 +403,171 @@ export default function Profile() {
         </section>
       );
     } else if (activeSection == "orderHistory") {
-      return <h1>Order HIstory</h1>;
+      // setShowOrderHistory(true);
+      return (
+        // <section>
+
+        // </section>
+        <section>
+          <div className="d-flex flex-column py-4 px-4">
+            <div className="d-flex pb-3 text-center border-bottom border-black border-1">
+              <p className="p-0 m-0 fs-5" style={{ width: "25%" }}>
+                <strong>ORDER</strong>
+              </p>
+              <p className="p-0 m-0 fs-5" style={{ width: "25%" }}>
+                <strong>DATE</strong>
+              </p>
+              <p className="p-0 m-0 fs-5" style={{ width: "25%" }}>
+                <strong>TOTAL</strong>
+              </p>
+              <p className="p-0 m-0 fs-5" style={{ width: "25%" }}>
+                <strong>ACTION</strong>
+              </p>
+            </div>
+            {orderHistoryData.length > 0 ? (
+              orderHistoryData.map((order) => {
+                const formattedDate = new Date(
+                  order.createdAt
+                ).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short", // "long" for full month name
+                  day: "numeric",
+                });
+                return (
+                  <div
+                    className="d-flex py-4 justify-content-between border-bottom  border-3"
+                    key={order._id}
+                  >
+                    <h4
+                      className="text-primary p-0 m-0 text-center"
+                      style={{ width: "25%", overflow: "hidden" }}
+                    >
+                      <strong>#{order._id.substring(0, 5)}</strong>
+                    </h4>
+                    <p
+                      className="p-0 m-0 fs-5 text-center"
+                      style={{ width: "25%" }}
+                    >
+                      {formattedDate}
+                    </p>
+                    <p
+                      className="p-0 m-0 fs-5 text-center"
+                      style={{ width: "25%" }}
+                    >
+                      ₹
+                      {order.products.reduce(
+                        (acc, curr) =>
+                          acc + curr.product.finalPrice * curr.quantity,
+                        0
+                      ) + 501}
+                    </p>
+                    <NavLink
+                      className="btn btn-success fs-6 py-1 m-0 "
+                      style={{ width: "25%" }}
+                      onClick={() => {
+                        setTotalProductPrice(
+                          order.products.reduce(
+                            (acc, curr) =>
+                              acc + curr.product.finalPrice * curr.quantity,
+                            0
+                          )
+                        );
+                        setParticularOrderData(order);
+                        setActiveSection("particularOrderDetail");
+                      }}
+                    >
+                      View
+                    </NavLink>
+                  </div>
+                );
+              })
+            ) : (
+              <h2 className="text-center mt-5 pt-5">Loading...</h2>
+            )}
+          </div>
+        </section>
+      );
+    } else if (activeSection == "particularOrderDetail") {
+      return (
+        <section className="container">
+          <div className="mt-3">
+            <h3 className="mb-5 text-center">
+              <strong>CHECK ORDER SUMMARY BELOW.</strong>
+            </h3>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th scope="col" className="ps-4">
+                    S No.
+                  </th>
+                  <th scope="col">Product Name</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Units</th>
+                  <th scope="col">Total Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                {particularOrderData.products.length > 0
+                  ? particularOrderData.products.map((particularProduct) => (
+                      <tr key={particularProduct._id}>
+                        <th scope="row" className="ps-4">
+                          {particularOrderData.products.indexOf(particularProduct) + 1}
+                        </th>
+                        <td>{particularProduct.product.shortTitle}</td>
+                        <td>{particularProduct.product.finalPrice}</td>
+                        <td>{particularProduct.quantity}</td>
+                        <td>
+                          {particularProduct.product.finalPrice * particularProduct.quantity}
+                        </td>
+                      </tr>
+                    ))
+                  : ""}
+                <tr>
+                  <th className="table-dark"></th>
+                  <th className="table-dark"></th>
+                  <th className="table-dark"></th>
+                  <th className="table-dark"></th>
+                  <th className="table-dark"></th>
+                </tr>
+                <tr>
+                  <th>{}</th>
+                  <th>Total Price of All Products:</th>
+                  <th>{}</th>
+                  <th>{}</th>
+                  <th className="pb-3" style={{ width: "29%" }}>
+                    {totalProductPrice} - 1000 (Discount) + 499 (Shipping) ={" "}
+                    {totalProductPrice + 501}
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+            <div>
+              <h3 className="mt-5 pt-5">Selected Address:</h3>
+              <div
+                className="border border-1 border-black p-4 mt-4 rounded rounded-4"
+                key={particularOrderData.address._id}
+                style={{ backgroundColor: "white" }}
+              >
+                <div className="d-flex">
+                  <p className="me-5">
+                    <strong>{particularOrderData.address.name.toUpperCase()}</strong>
+                  </p>
+                  <p className="">
+                    <strong>{particularOrderData.address.mobileNumber}</strong>
+                  </p>
+                </div>
+                <div>
+                  <p className="text-start" style={{ width: "75%" }}>
+                    {particularOrderData.address.detailedAddress}, {particularOrderData.address.city},{" "}
+                    {particularOrderData.address.state} -{" "}
+                    <strong>{particularOrderData.address.pincode}</strong>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
     }
     return (
       <h2 className="text-center mt-5 pt-5">Click On Any Relevant Section</h2>
@@ -404,7 +602,10 @@ export default function Profile() {
                 style={{
                   color: activeSection === "orderHistory" ? "black" : "grey",
                 }}
-                onClick={() => setActiveSection("orderHistory")}
+                onClick={() => {
+                  setActiveSection("orderHistory");
+                  setShowOrderHistory(true);
+                }}
               >
                 <h3>Order History</h3>
                 <FaShoppingBag style={{ fontSize: "30px" }} />
