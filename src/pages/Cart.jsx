@@ -4,6 +4,8 @@ import { NavLink } from "react-router-dom";
 import { FaPlusCircle, FaMinusCircle } from "react-icons/fa";
 import { useEffect, useState } from "react";
 
+import useProductContext from "../contexts/ProductContext";
+
 export default function Cart() {
   // const [productCount, setProductCount] = useState(1);
   const [totalProducts, setTotalProducts] = useState(0);
@@ -14,6 +16,13 @@ export default function Cart() {
 
   //For correcting of 2 order being placed issue.
   const [orderPlaced, setOrderPlaced] = useState(false);
+
+  const {
+    wishlistItemCount,
+    setWishlistItemCount,
+    cartItemCount,
+    setCartItemCount,
+  } = useProductContext();
 
   const apiUrl =
     "https://shopping-site-backend-mocha.vercel.app/api/products/get-cart-items/cart";
@@ -58,7 +67,10 @@ export default function Cart() {
       method: "POST",
     })
       .then((response) => response.json())
-      .then((data) => console.log(data))
+      .then((data) => {
+        console.log(data);
+        setCartItemCount(cartItemCount - 1);
+      })
       .catch((err) => console.log("Error in removing data from cart", err));
     // console.log(prodId, specs);
     const productIndex = finalData.cartItems.findIndex(
@@ -71,6 +83,25 @@ export default function Cart() {
       );
     else finalData.cartItems[productIndex].addedToCart.pop();
     setFinalData({ ...finalData });
+  }
+
+  async function wishlistHandler(prodId, addedToWishlistStatus) {
+    // console.log(prodId, addedToWishlistStatus);
+    const url = `https://shopping-site-backend-mocha.vercel.app/api/products/toggle-wishlist/${prodId}`;
+    await fetch(url, {
+      method: "PATCH",
+    })
+      .then((data) => {
+        // console.log(data);
+        if (data.status == 200) {
+          if (addedToWishlistStatus)
+            setWishlistItemCount(wishlistItemCount - 1);
+          else setWishlistItemCount(wishlistItemCount + 1);
+          // console.log(finalData.cartItems)
+          finalData.cartItems[finalData.cartItems.findIndex(obj => obj._id === prodId)].addedToWishlist = !addedToWishlistStatus;
+        }
+      })
+      .catch((err) => console.log(err));
   }
 
   async function finalOrderHandler() {
@@ -213,9 +244,31 @@ export default function Cart() {
                           >
                             Remove From Cart
                           </NavLink>
-                          <NavLink className="text-decoration-none fw-semibold border border-2 text-center py-1 text-body-tertiary">
-                            Move to Wishlist
-                          </NavLink>
+                          {product.addedToWishlist ? (
+                            <NavLink
+                              className="text-decoration-none fw-semibold border border-3 border-black text-center py-1 text-dark"
+                              onClick={() =>
+                                wishlistHandler(
+                                  product._id,
+                                  product.addedToWishlist
+                                )
+                              }
+                            >
+                              Remove From Wishlist
+                            </NavLink>
+                          ) : (
+                            <NavLink
+                              className="text-decoration-none fw-semibold border border-3 border-primary text-center py-1 text-body-primary"
+                              onClick={() =>
+                                wishlistHandler(
+                                  product._id,
+                                  product.addedToWishlist
+                                )
+                              }
+                            >
+                              <strong>Move to Wishlist</strong>
+                            </NavLink>
+                          )}
                         </div>
                       </div>
                     </div>

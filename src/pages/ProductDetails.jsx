@@ -15,6 +15,7 @@ import {
 } from "react-icons/fa";
 import useFetch from "../useFetch";
 import { useState } from "react";
+import useProductContext from "../contexts/ProductContext";
 
 export default function ProductDetails() {
   const productId = useParams().prodId;
@@ -26,13 +27,27 @@ export default function ProductDetails() {
   const [showAlert, setShowAlert] = useState("");
   // console.log(productData);
 
+  const {
+    setWishlistItemCount,
+    wishlistItemCount,
+    cartItemCount,
+    setCartItemCount,
+  } = useProductContext();
+
   async function wishlistHandler() {
     productData.addedToWishlist = !productData.addedToWishlist;
     const url = `https://shopping-site-backend-mocha.vercel.app/api/products/toggle-wishlist/${productData._id}`;
     await fetch(url, {
       method: "PATCH",
     })
-      .then((data) => console.log(data))
+      .then((data) => {
+        // console.log(data);
+        if (data.status === 200) {
+          if (!productData.addedToWishlist)
+            setWishlistItemCount(wishlistItemCount - 1);
+          else setWishlistItemCount(wishlistItemCount + 1);
+        }
+      })
       .catch((err) => console.log(err));
   }
 
@@ -52,8 +67,10 @@ export default function ProductDetails() {
     })
       .then((data) => {
         // console.log(data.status)
-        if (data.status == 200) setShowAlert("true");
-        else setShowAlert("false");
+        if (data.status == 200) {
+          setShowAlert("true");
+          setCartItemCount(cartItemCount + 1);
+        } else setShowAlert("false");
       })
       .catch((err) => console.log(err));
   }
@@ -68,37 +85,41 @@ export default function ProductDetails() {
       <Navbar showsearch={false} />
       <main className="bg-body-tertiary py-4">
         <section className="container bg-white" style={{ width: "75%" }}>
-          {showAlert.length > 0 ? (showAlert === "true" ? (
-            <>
-              <div
-                className="alert alert-success alert-dismissible fade show"
-                role="alert"
-              >
-                <strong>Success!</strong> Product added to cart.
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="alert"
-                  aria-label="Close"
-                ></button>
-              </div>
-            </>
+          {showAlert.length > 0 ? (
+            showAlert === "true" ? (
+              <>
+                <div
+                  className="alert alert-success alert-dismissible fade show"
+                  role="alert"
+                >
+                  <strong>Success!</strong> Product added to cart.
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  ></button>
+                </div>
+              </>
+            ) : (
+              <>
+                <div
+                  className="alert alert-danger alert-dismissible fade show"
+                  role="alert"
+                >
+                  <strong>Failure!</strong> Product Couldn't be added to cart.
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  ></button>
+                </div>
+              </>
+            )
           ) : (
-            <>
-              <div
-                className="alert alert-danger alert-dismissible fade show"
-                role="alert"
-              >
-                <strong>Failure!</strong> Product Couldn't be added to cart.
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="alert"
-                  aria-label="Close"
-                ></button>
-              </div>
-            </>
-          )) : ""}
+            ""
+          )}
           <div className="row p-3">
             {productData ? (
               <>

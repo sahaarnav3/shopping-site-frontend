@@ -2,8 +2,12 @@ import { NavLink } from "react-router-dom";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { useState } from "react";
 
+import useProductContext from "../contexts/ProductContext";
+
 export default function ProductCard({ productData }) {
   const [productDetails, setProductDetails] = useState(productData);
+
+  const { setWishlistItemCount, wishlistItemCount } = useProductContext();
 
   // console.log(productData);
   async function wishlistHandler() {
@@ -13,9 +17,16 @@ export default function ProductCard({ productData }) {
     });
     const url = `https://shopping-site-backend-mocha.vercel.app/api/products/toggle-wishlist/${productDetails._id}`;
     await fetch(url, {
-      method: "PATCH"
+      method: "PATCH",
     })
-      .then((data) => console.log(data))
+      .then((data) => {
+        // console.log(data);
+        if (data.status === 200) {
+          if (productDetails.addedToWishlist)
+            setWishlistItemCount(wishlistItemCount - 1);
+          else setWishlistItemCount(wishlistItemCount + 1);
+        }
+      })
       .catch((err) => console.log(err));
   }
 

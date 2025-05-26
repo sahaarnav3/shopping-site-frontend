@@ -1,11 +1,12 @@
 import Navbar from "../components/Navbar";
 
-import useProductContext from "../contexts/ProductContext";
 import ProductCard from "../components/ProductCard";
 
+import useFetch from "../useFetch";
+
 export default function Wishlist() {
-  const { wishlistItems } = useProductContext();
-  console.log(wishlistItems);
+  
+  const { finalData: wishlistItems } = useFetch("https://shopping-site-backend-mocha.vercel.app/api/products/wishlist-items/wishlist");
 
   return (
     <>
