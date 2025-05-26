@@ -9,7 +9,6 @@ export default function ProductCard({ productData }) {
 
   const { setWishlistItemCount, wishlistItemCount } = useProductContext();
 
-  // console.log(productData);
   async function wishlistHandler() {
     setProductDetails({
       ...productDetails,
@@ -20,7 +19,6 @@ export default function ProductCard({ productData }) {
       method: "PATCH",
     })
       .then((data) => {
-        // console.log(data);
         if (data.status === 200) {
           if (productDetails.addedToWishlist)
             setWishlistItemCount(wishlistItemCount - 1);

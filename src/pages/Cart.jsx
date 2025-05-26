@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import useProductContext from "../contexts/ProductContext";
 
 export default function Cart() {
-  // const [productCount, setProductCount] = useState(1);
   const [totalProducts, setTotalProducts] = useState(0);
   const [totalProductPrice, setTotalProductPrice] = useState(0);
 
@@ -27,7 +26,6 @@ export default function Cart() {
   const apiUrl =
     "https://shopping-site-backend-mocha.vercel.app/api/products/get-cart-items/cart";
   const { finalData, setFinalData } = useFetch(apiUrl);
-  // console.log(finalData?.cartItems);
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
@@ -72,7 +70,6 @@ export default function Cart() {
         setCartItemCount(cartItemCount - 1);
       })
       .catch((err) => console.log("Error in removing data from cart", err));
-    // console.log(prodId, specs);
     const productIndex = finalData.cartItems.findIndex(
       (obj) => obj._id == prodId
     );
@@ -86,7 +83,6 @@ export default function Cart() {
   }
 
   async function wishlistHandler(prodId, addedToWishlistStatus) {
-    // console.log(prodId, addedToWishlistStatus);
     const url = `https://shopping-site-backend-mocha.vercel.app/api/products/toggle-wishlist/${prodId}`;
     await fetch(url, {
       method: "PATCH",
@@ -97,7 +93,6 @@ export default function Cart() {
           if (addedToWishlistStatus)
             setWishlistItemCount(wishlistItemCount - 1);
           else setWishlistItemCount(wishlistItemCount + 1);
-          // console.log(finalData.cartItems)
           finalData.cartItems[finalData.cartItems.findIndex(obj => obj._id === prodId)].addedToWishlist = !addedToWishlistStatus;
         }
       })
@@ -334,12 +329,6 @@ export default function Cart() {
         </>
       );
     } else {
-      // console.log(finalData.cartItems);
-      // console.log(defaultAddress);
-      // finalOrderHandler();
-      //solve this issue of 2 saves here.
-      // setOrderPlaced(true);
-
       return (
         <>
           <main className="container">

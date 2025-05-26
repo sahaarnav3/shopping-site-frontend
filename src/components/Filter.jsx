@@ -22,7 +22,7 @@ export default function Filter({ finalData, setFilteredData }) {
         if (product.finalPrice < currentSliderValue && product.rating >= currentRating)
           return product;
       });
-      // console.log("tempdata-", tempData);
+      
       let finalTempArray
       if(currentSortBy == 'ascending')
         finalTempArray = tempData.sort((a, b) => a.finalPrice - b.finalPrice);

@@ -6,11 +6,7 @@ import useProductContext from "../contexts/ProductContext";
 
 export default function Navbar({ showsearch = false }) {
 
-  // const api = "https://shopping-site-backend-mocha.vercel.app/api/products/wishlist-items/wishlist";
-  // const { finalData } = useFetch(api);
-  // console.log(finalData?.data.product.length);
   const { cartItemCount, wishlistItemCount } = useProductContext();
-  // console.log("navbar cart -", cartItems?.cartItems.length);
 
   return (
     <nav className="navbar">

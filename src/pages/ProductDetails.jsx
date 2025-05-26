@@ -25,7 +25,6 @@ export default function ProductDetails() {
   const [productCount, setProductCount] = useState(1);
   const [sizeSelected, setSizeSelected] = useState("S");
   const [showAlert, setShowAlert] = useState("");
-  // console.log(productData);
 
   const {
     setWishlistItemCount,
@@ -74,11 +73,6 @@ export default function ProductDetails() {
       })
       .catch((err) => console.log(err));
   }
-
-  // function buyNowHandler(){
-  //   addToCartHandler();
-
-  // }
 
   return (
     <>

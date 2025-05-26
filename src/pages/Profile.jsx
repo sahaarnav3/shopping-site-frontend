@@ -22,8 +22,6 @@ export default function Profile() {
   const [totalProductPrice, setTotalProductPrice] = useState(0);
   const [particularOrderData, setParticularOrderData] = useState([]);
 
-  // const [renderedData, setRenderedData] = useState();
-
   useEffect(() => {
     if (showOrderHistory) {
       const apiUrl =
@@ -32,7 +30,6 @@ export default function Profile() {
         .then((response) => response.json())
         .then((data) => {
           if (data) {
-            // setOrderHistoryData(data.orders);
             setOrderHistoryData(
               data.orders.map((order) => ({
                 ...order,
@@ -70,7 +67,6 @@ export default function Profile() {
   }, []);
 
   function addNewAddressHandler() {
-    // console.log("addres deets", name, phoneNumber, pincode, locality);
     const apiUrl =
       "https://shopping-site-backend-mocha.vercel.app/api/address/add-new-address";
 
@@ -91,7 +87,6 @@ export default function Profile() {
       },
     })
       .then((response) => {
-        // console.log(response.status);
         if (response.status === 200) setShowAddressAlert("true");
         else setShowAddressAlert("false");
         return response.json();
@@ -114,7 +109,6 @@ export default function Profile() {
   }
 
   function deleteAddressHandler(addressId, defaultAddressStatus) {
-    // console.log(addressId);
     const apiUrl = `https://shopping-site-backend-mocha.vercel.app/api/address/delete-address/${addressId}`;
     if (defaultAddressStatus) return;
     fetch(apiUrl, {
@@ -148,21 +142,6 @@ export default function Profile() {
       })
       .catch((err) => console.log(err));
   }
-
-  // function accountDetailsHandler() {
-  //   setActiveSection("accountDetails");
-  //   setRenderedData();
-  // }
-  // //   accountDetailsHandler();
-
-  // function orderHistoryHandler() {
-  //   setActiveSection("orderHistory");
-  // }
-
-  // function addressHandler() {
-  //   setActiveSection("address");
-  //   // setRenderedData();
-  // }
 
   function renderDataHandler() {
     if (activeSection == "address") {
@@ -403,11 +382,7 @@ export default function Profile() {
         </section>
       );
     } else if (activeSection == "orderHistory") {
-      // setShowOrderHistory(true);
       return (
-        // <section>
-
-        // </section>
         <section>
           <div className="d-flex flex-column py-4 px-4">
             <div className="d-flex pb-3 text-center border-bottom border-black border-1">
@@ -511,13 +486,16 @@ export default function Profile() {
                   ? particularOrderData.products.map((particularProduct) => (
                       <tr key={particularProduct._id}>
                         <th scope="row" className="ps-4">
-                          {particularOrderData.products.indexOf(particularProduct) + 1}
+                          {particularOrderData.products.indexOf(
+                            particularProduct
+                          ) + 1}
                         </th>
                         <td>{particularProduct.product.shortTitle}</td>
                         <td>{particularProduct.product.finalPrice}</td>
                         <td>{particularProduct.quantity}</td>
                         <td>
-                          {particularProduct.product.finalPrice * particularProduct.quantity}
+                          {particularProduct.product.finalPrice *
+                            particularProduct.quantity}
                         </td>
                       </tr>
                     ))
@@ -550,7 +528,9 @@ export default function Profile() {
               >
                 <div className="d-flex">
                   <p className="me-5">
-                    <strong>{particularOrderData.address.name.toUpperCase()}</strong>
+                    <strong>
+                      {particularOrderData.address.name.toUpperCase()}
+                    </strong>
                   </p>
                   <p className="">
                     <strong>{particularOrderData.address.mobileNumber}</strong>
@@ -558,7 +538,8 @@ export default function Profile() {
                 </div>
                 <div>
                   <p className="text-start" style={{ width: "75%" }}>
-                    {particularOrderData.address.detailedAddress}, {particularOrderData.address.city},{" "}
+                    {particularOrderData.address.detailedAddress},{" "}
+                    {particularOrderData.address.city},{" "}
                     {particularOrderData.address.state} -{" "}
                     <strong>{particularOrderData.address.pincode}</strong>
                   </p>
