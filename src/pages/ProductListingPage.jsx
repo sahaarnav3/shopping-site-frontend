@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Filter from "../components/Filter";
 import useFetch from "../useFetch";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 
 export default function ProductListingPage({ category }) {
@@ -10,9 +10,24 @@ export default function ProductListingPage({ category }) {
     `https://shopping-site-backend-mocha.vercel.app/api/products/by-category/${category}`;
   const { finalData } = useFetch(url);
   const [filteredData, setFilteredData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  // console.log(searchTerm);
+
+  useEffect(() => {
+    if(searchTerm.length > 0){
+      // console.log(filteredData);
+      if(searchTerm == "ALLPRODUCTS"){
+        setFilteredData(finalData.data.products);
+        return;
+      }
+      let tempArr = finalData.data.products.filter(product => product.shortTitle.toLowerCase().includes(searchTerm));
+      setFilteredData(tempArr);
+    } 
+  }, [searchTerm]);
+
   return (
     <>
-      <Navbar showsearch={true} />
+      <Navbar showsearch={true} setSearchTerm={setSearchTerm} />
       <main className="row m-0 py-1">
         <section className="col-md-3 py-4 px-5">
           <Filter finalData={finalData} setFilteredData={setFilteredData} />

@@ -4,7 +4,7 @@ import { FaHeart, FaShoppingCart, FaUserAlt } from "react-icons/fa";
 // import useFetch from "../useFetch";
 import useProductContext from "../contexts/ProductContext";
 
-export default function Navbar({ showsearch = false }) {
+export default function Navbar({ showsearch = false, setSearchTerm }) {
 
   const { cartItemCount, wishlistItemCount } = useProductContext();
 
@@ -24,6 +24,11 @@ export default function Navbar({ showsearch = false }) {
             type="search"
             placeholder="🔍 Search"
             aria-label="Search"
+            onChange={(e) => {
+              if(e.target.value == "")
+                setSearchTerm("ALLPRODUCTS");
+              else setSearchTerm(e.target.value)
+            }}
           /> : ""}
         </div>
         <div className="d-flex">
