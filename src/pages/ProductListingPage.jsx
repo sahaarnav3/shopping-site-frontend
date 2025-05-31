@@ -5,24 +5,27 @@ import useFetch from "../useFetch";
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export default function ProductListingPage({ category }) {
-  const url =
-    `https://shopping-site-backend-mocha.vercel.app/api/products/by-category/${category}`;
+  const url = `${API_BASE_URL}/products/by-category/${category}`;
   const { finalData } = useFetch(url);
   const [filteredData, setFilteredData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   // console.log(searchTerm);
 
   useEffect(() => {
-    if(searchTerm.length > 0){
+    if (searchTerm.length > 0) {
       // console.log(filteredData);
-      if(searchTerm == "ALLPRODUCTS"){
+      if (searchTerm == "ALLPRODUCTS") {
         setFilteredData(finalData.data.products);
         return;
       }
-      let tempArr = finalData.data.products.filter(product => product.shortTitle.toLowerCase().includes(searchTerm));
+      let tempArr = finalData.data.products.filter((product) =>
+        product.shortTitle.toLowerCase().includes(searchTerm)
+      );
       setFilteredData(tempArr);
-    } 
+    }
   }, [searchTerm]);
 
   return (
@@ -32,7 +35,10 @@ export default function ProductListingPage({ category }) {
         <section className="col-md-3 py-4 px-5">
           <Filter finalData={finalData} setFilteredData={setFilteredData} />
         </section>
-        <section className="col-md-9 bg-light rounded px-5 py-4" style={{minHeight: "53rem"}}>
+        <section
+          className="col-md-9 bg-light rounded px-5 py-4"
+          style={{ minHeight: "53rem" }}
+        >
           <h4 className="fw-medium mb-4">
             {finalData != null ? (
               <>

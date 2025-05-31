@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 
 import useProductContext from "../contexts/ProductContext";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export default function Cart() {
   const [totalProducts, setTotalProducts] = useState(0);
   const [totalProductPrice, setTotalProductPrice] = useState(0);
@@ -24,7 +26,7 @@ export default function Cart() {
   } = useProductContext();
 
   const apiUrl =
-    "https://shopping-site-backend-mocha.vercel.app/api/products/get-cart-items/cart";
+    `${API_BASE_URL}/products/get-cart-items/cart`;
   const { finalData, setFinalData } = useFetch(apiUrl);
 
   useEffect(() => {
@@ -44,7 +46,7 @@ export default function Cart() {
   useEffect(() => {
     const timeOut = setTimeout(() => {
       const apiUrl =
-        "https://shopping-site-backend-mocha.vercel.app/api/address/fetch-default-address";
+        `${API_BASE_URL}/address/fetch-default-address`;
       fetch(apiUrl)
         .then((response) => {
           if (response.status === 200) return response.json();
@@ -60,7 +62,7 @@ export default function Cart() {
   }, []);
 
   async function removeFromCartHandler(prodId, specs) {
-    const removeApiUrl = `https://shopping-site-backend-mocha.vercel.app/api/products/remove-from-cart/${prodId}/${specs}`;
+    const removeApiUrl = `${API_BASE_URL}/products/remove-from-cart/${prodId}/${specs}`;
     await fetch(removeApiUrl, {
       method: "POST",
     })
@@ -83,7 +85,7 @@ export default function Cart() {
   }
 
   async function wishlistHandler(prodId, addedToWishlistStatus) {
-    const url = `https://shopping-site-backend-mocha.vercel.app/api/products/toggle-wishlist/${prodId}`;
+    const url = `${API_BASE_URL}/products/toggle-wishlist/${prodId}`;
     await fetch(url, {
       method: "PATCH",
     })
@@ -118,7 +120,7 @@ export default function Cart() {
 
     try {
       const orderRes = await fetch(
-        "https://shopping-site-backend-mocha.vercel.app/api/orders/create-new-order",
+        `${API_BASE_URL}/orders/create-new-order`,
         {
           method: "POST",
           body: JSON.stringify(finalOrderData),
@@ -130,7 +132,7 @@ export default function Cart() {
 
       if (orderRes.status === 200) {
         const removeRes = await fetch(
-          "https://shopping-site-backend-mocha.vercel.app/api/products/remove-all-cart-items",
+          `${API_BASE_URL}/products/remove-all-cart-items`,
           {
             method: "PATCH",
           }

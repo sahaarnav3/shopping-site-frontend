@@ -6,14 +6,15 @@ const ProductContext = createContext();
 const useProductContext = () => useContext(ProductContext);
 export default useProductContext;
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export function ProductProvider({ children }) {
   const [wishlistItemCount, setWishlistItemCount] = useState(0);
   const [cartItemCount, setCartItemCount] = useState(0);
 
-  const wishlistApi =
-    "https://shopping-site-backend-mocha.vercel.app/api/products/wishlist-items/wishlist";
-  const cartItemsApi =
-    "https://shopping-site-backend-mocha.vercel.app/api/products/get-cart-items/cart";
+  const wishlistApi = `${API_BASE_URL}/products/wishlist-items/wishlist`;
+  const cartItemsApi = `${API_BASE_URL}/products/get-cart-items/cart`;
+
   const { finalData: wishlistItemsData } = useFetch(wishlistApi);
   const { finalData: cartItemsData } = useFetch(cartItemsApi);
 
@@ -23,8 +24,11 @@ export function ProductProvider({ children }) {
   }, [wishlistItemsData]);
 
   useEffect(() => {
-    if (cartItemsData){
-      let temp = cartItemsData.cartItems.reduce((acc, curr) => acc + curr.addedToCart.length, 0);
+    if (cartItemsData) {
+      let temp = cartItemsData.cartItems.reduce(
+        (acc, curr) => acc + curr.addedToCart.length,
+        0
+      );
       setCartItemCount(temp);
     }
   }, [cartItemsData]);
@@ -36,7 +40,7 @@ export function ProductProvider({ children }) {
         wishlistItemCount,
         setWishlistItemCount,
         cartItemCount,
-        setCartItemCount
+        setCartItemCount,
       }}
     >
       {children}

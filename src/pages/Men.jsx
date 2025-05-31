@@ -6,9 +6,11 @@ import ProductCard from "../components/ProductCard";
 
 import { useState } from "react";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export default function Men() {
   const url =
-    "https://shopping-site-backend-mocha.vercel.app/api/products/by-category/men";
+    `${API_BASE_URL}/products/by-category/men`;
   const { finalData } = useFetch(url);
   const [filteredData, setFilteredData] = useState([]);
 
@@ -47,3 +49,6 @@ export default function Men() {
     </>
   );
 }
+
+//This component is not in use anymore. This was initial approach (To make seperate pages for seperate category). 
+// But the current approach is to use ProductListingPage component.

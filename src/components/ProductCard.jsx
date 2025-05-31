@@ -4,6 +4,8 @@ import { useState } from "react";
 
 import useProductContext from "../contexts/ProductContext";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export default function ProductCard({ productData }) {
   const [productDetails, setProductDetails] = useState(productData);
 
@@ -14,7 +16,7 @@ export default function ProductCard({ productData }) {
       ...productDetails,
       addedToWishlist: !productDetails.addedToWishlist,
     });
-    const url = `https://shopping-site-backend-mocha.vercel.app/api/products/toggle-wishlist/${productDetails._id}`;
+    const url = `${API_BASE_URL}/products/toggle-wishlist/${productDetails._id}`;
     await fetch(url, {
       method: "PATCH",
     })

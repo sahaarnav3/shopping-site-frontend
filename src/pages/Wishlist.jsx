@@ -4,9 +4,11 @@ import ProductCard from "../components/ProductCard";
 
 import useFetch from "../useFetch";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export default function Wishlist() {
   const { finalData: wishlistItems } = useFetch(
-    "https://shopping-site-backend-mocha.vercel.app/api/products/wishlist-items/wishlist"
+    `${API_BASE_URL}/products/wishlist-items/wishlist`
   );
 
   return (

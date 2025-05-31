@@ -17,9 +17,11 @@ import useFetch from "../useFetch";
 import { useState } from "react";
 import useProductContext from "../contexts/ProductContext";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export default function ProductDetails() {
   const productId = useParams().prodId;
-  const apiUrl = `https://shopping-site-backend-mocha.vercel.app/api/products/${productId}`;
+  const apiUrl = `${API_BASE_URL}/products/${productId}`;
   const { finalData } = useFetch(apiUrl);
   const productData = finalData?.data.product;
   const [productCount, setProductCount] = useState(1);
@@ -35,7 +37,7 @@ export default function ProductDetails() {
 
   async function wishlistHandler() {
     productData.addedToWishlist = !productData.addedToWishlist;
-    const url = `https://shopping-site-backend-mocha.vercel.app/api/products/toggle-wishlist/${productData._id}`;
+    const url = `${API_BASE_URL}/products/toggle-wishlist/${productData._id}`;
     await fetch(url, {
       method: "PATCH",
     })
@@ -60,7 +62,7 @@ export default function ProductDetails() {
   }
 
   async function addToCartHandler() {
-    const url = `https://shopping-site-backend-mocha.vercel.app/api/products/add-to-cart/${productData._id}/${sizeSelected}`;
+    const url = `${API_BASE_URL}/products/add-to-cart/${productData._id}/${sizeSelected}`;
     await fetch(url, {
       method: "POST",
     })

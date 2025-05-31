@@ -4,6 +4,8 @@ import { NavLink } from "react-router-dom";
 import { FaUserCircle, FaShoppingBag, FaAddressCard } from "react-icons/fa";
 import { useEffect, useState } from "react";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export default function Profile() {
   const [activeSection, setActiveSection] = useState("");
 
@@ -25,7 +27,7 @@ export default function Profile() {
   useEffect(() => {
     if (showOrderHistory) {
       const apiUrl =
-        "https://shopping-site-backend-mocha.vercel.app/api/orders/get-all-orders";
+        `${API_BASE_URL}/orders/get-all-orders`;
       fetch(apiUrl)
         .then((response) => response.json())
         .then((data) => {
@@ -50,7 +52,7 @@ export default function Profile() {
   useEffect(() => {
     const timeOut = setTimeout(() => {
       const apiUrl =
-        "https://shopping-site-backend-mocha.vercel.app/api/address/get-all-address";
+        `${API_BASE_URL}/address/get-all-address`;
       fetch(apiUrl)
         .then((response) => {
           if (response.status === 200) return response.json();
@@ -68,7 +70,7 @@ export default function Profile() {
 
   function addNewAddressHandler() {
     const apiUrl =
-      "https://shopping-site-backend-mocha.vercel.app/api/address/add-new-address";
+      `${API_BASE_URL}/address/add-new-address`;
 
     const addressObject = {
       name: name,
@@ -109,7 +111,7 @@ export default function Profile() {
   }
 
   function deleteAddressHandler(addressId, defaultAddressStatus) {
-    const apiUrl = `https://shopping-site-backend-mocha.vercel.app/api/address/delete-address/${addressId}`;
+    const apiUrl = `${API_BASE_URL}/address/delete-address/${addressId}`;
     if (defaultAddressStatus) return;
     fetch(apiUrl, {
       method: "DELETE",
@@ -125,7 +127,7 @@ export default function Profile() {
   }
 
   function setAsDefaultAddressHandler(addressId) {
-    const apiUrl = `https://shopping-site-backend-mocha.vercel.app/api/address/edit-default/${addressId}`;
+    const apiUrl = `${API_BASE_URL}/address/edit-default/${addressId}`;
     fetch(apiUrl, {
       method: "PATCH",
     })
