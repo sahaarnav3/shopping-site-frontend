@@ -25,8 +25,7 @@ export default function Cart() {
     setCartItemCount,
   } = useProductContext();
 
-  const apiUrl =
-    `${API_BASE_URL}/products/get_cart_items/cart`;
+  const apiUrl = `${API_BASE_URL}/products/get_cart_items/cart`;
   const { finalData, setFinalData } = useFetch(apiUrl);
 
   useEffect(() => {
@@ -45,8 +44,7 @@ export default function Cart() {
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
-      const apiUrl =
-        `${API_BASE_URL}/address/fetch_default_address`;
+      const apiUrl = `${API_BASE_URL}/address/fetch_default_address`;
       fetch(apiUrl)
         .then((response) => {
           if (response.status === 200) return response.json();
@@ -95,7 +93,9 @@ export default function Cart() {
           if (addedToWishlistStatus)
             setWishlistItemCount(wishlistItemCount - 1);
           else setWishlistItemCount(wishlistItemCount + 1);
-          finalData.cartItems[finalData.cartItems.findIndex(obj => obj._id === prodId)].addedToWishlist = !addedToWishlistStatus;
+          finalData.cartItems[
+            finalData.cartItems.findIndex((obj) => obj._id === prodId)
+          ].addedToWishlist = !addedToWishlistStatus;
         }
       })
       .catch((err) => console.log(err));
@@ -119,16 +119,13 @@ export default function Cart() {
     };
 
     try {
-      const orderRes = await fetch(
-        `${API_BASE_URL}/orders/create_new_order`,
-        {
-          method: "POST",
-          body: JSON.stringify(finalOrderData),
-          headers: {
-            "content-type": "application/json",
-          },
-        }
-      );
+      const orderRes = await fetch(`${API_BASE_URL}/orders/create_new_order`, {
+        method: "POST",
+        body: JSON.stringify(finalOrderData),
+        headers: {
+          "content-type": "application/json",
+        },
+      });
 
       if (orderRes.status === 200) {
         const removeRes = await fetch(
@@ -154,6 +151,24 @@ export default function Cart() {
   useEffect(() => {
     if (orderPlaced) finalOrderHandler();
   }, [orderPlaced]);
+
+  function decreaseProductCounHandler(productId) {
+    finalData.cartItems.map((eachProduct) => {
+      if (eachProduct._id === productId && eachProduct.addedToCart.length > 1)
+        eachProduct.addedToCart.pop();
+    });
+    setFinalData({ ...finalData });
+  }
+
+  function increaseProductCounHandler(productId) {
+    finalData.cartItems.map((eachProduct) => {
+      if (eachProduct._id === productId)
+        eachProduct.addedToCart.push(
+          eachProduct.addedToCart[eachProduct.addedToCart.length - 1]
+        );
+    });
+    setFinalData({ ...finalData });
+  }
 
   function renderData() {
     if (!showAddressList) {
@@ -206,11 +221,20 @@ export default function Cart() {
                             <strong>Quantity:</strong>
                           </p>
                           <div className="d-flex ms-3">
-                            <FaMinusCircle
-                              style={{ fontSize: "23px" }}
-                              className="mt-2"
-                              // onClick={() => setProductCount(productCount - 1)}
-                            />
+                            {product.addedToCart.length > 1 ? (
+                              <FaMinusCircle
+                                style={{ fontSize: "23px" }}
+                                className="mt-2"
+                                onClick={() =>
+                                  decreaseProductCounHandler(product._id)
+                                }
+                              />
+                            ) : (
+                              <FaMinusCircle
+                                style={{ fontSize: "23px", color: "grey" }}
+                                className="mt-2"
+                              />
+                            )}
                             <p
                               className="border border-2 px-3 py-1 mx-2 rounded"
                               style={{ fontSize: "17px" }}
@@ -220,7 +244,9 @@ export default function Cart() {
                             <FaPlusCircle
                               style={{ fontSize: "23px" }}
                               className="mt-2"
-                              // onClick={() => setProductCount(productCount + 1)}
+                              onClick={() =>
+                                increaseProductCounHandler(product._id)
+                              }
                             />
                           </div>
                         </div>
@@ -380,7 +406,7 @@ export default function Cart() {
                     <th>{}</th>
                     <th className="pb-3" style={{ width: "29%" }}>
                       {totalProductPrice} - 1000 (Discount) + 499 (Shipping) ={" "}
-                      {totalProductPrice + 501}
+                      {totalProductPrice - 501}
                     </th>
                   </tr>
                 </tbody>

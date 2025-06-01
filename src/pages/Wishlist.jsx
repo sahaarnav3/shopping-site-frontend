@@ -23,7 +23,7 @@ export default function Wishlist() {
             {wishlistItems != null
               ? wishlistItems.data.product.map((prodData) => (
                   <div className="my-2 mx-3" key={prodData._id}>
-                    <ProductCard key={prodData._id} productData={prodData} />
+                    <ProductCard productData={prodData} />
                   </div>
                 ))
               : <h2>Loading...</h2>}

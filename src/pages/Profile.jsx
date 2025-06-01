@@ -436,7 +436,7 @@ export default function Profile() {
                         (acc, curr) =>
                           acc + curr.product.finalPrice * curr.quantity,
                         0
-                      ) + 501}
+                      ) - 501}
                     </p>
                     <NavLink
                       className="btn btn-success fs-6 py-1 m-0 "
@@ -516,7 +516,7 @@ export default function Profile() {
                   <th>{}</th>
                   <th className="pb-3" style={{ width: "29%" }}>
                     {totalProductPrice} - 1000 (Discount) + 499 (Shipping) ={" "}
-                    {totalProductPrice + 501}
+                    {totalProductPrice - 501}
                   </th>
                 </tr>
               </tbody>
@@ -560,15 +560,15 @@ export default function Profile() {
   return (
     <>
       <Navbar />
-      <main className="bg-body-secondary py-4" style={{ minHeight: "54em" }}>
+      <main className="bg-body-secondary py-4 pb-5" style={{height: "auto", overflow: "auto"}}>
         <div className="container">
           <h2 className="text-center mb-4">
-            <strong>Dashboard</strong>
+            <strong>Profile Details</strong>
           </h2>
-          <div className="row" style={{ height: "46em" }}>
+          <div className="row mb-4" style={{ height: "87vh" }}>
             <div
-              className="col-md-4 border border-0 border-black py-4 px-4 d-flex flex-column justify-content-between"
-              style={{ height: "40%", fontSize: "20px" }}
+              className="col-md-4 border border-0 border-black py-4 mb-4 px-4 d-flex flex-column justify-content-between"
+              style={{ height: "38%", fontSize: "20px" }}
             >
               <NavLink
                 className="d-flex justify-content-between text-decoration-none border-bottom border-2 border-black pb-2 px-2"
@@ -606,7 +606,8 @@ export default function Profile() {
             </div>
             <div
               className="col-md-8 border border-2 border-black px-4"
-              style={{ height: "100%", overflow: "auto" }}
+              style={{ height: "93%", overflow: "auto" }}
+              id="detail-view"
             >
               {/* {renderedData} this is causing some sorta rendering issue. */}
               {renderDataHandler()}
