@@ -12,8 +12,8 @@ export function ProductProvider({ children }) {
   const [wishlistItemCount, setWishlistItemCount] = useState(0);
   const [cartItemCount, setCartItemCount] = useState(0);
 
-  const wishlistApi = `${API_BASE_URL}/products/wishlist-items/wishlist`;
-  const cartItemsApi = `${API_BASE_URL}/products/get-cart-items/cart`;
+  const wishlistApi = `${API_BASE_URL}/products/wishlist_items/wishlist`;
+  const cartItemsApi = `${API_BASE_URL}/products/get_cart_items/cart`;
 
   const { finalData: wishlistItemsData } = useFetch(wishlistApi);
   const { finalData: cartItemsData } = useFetch(cartItemsApi);

@@ -8,7 +8,7 @@ import ProductCard from "../components/ProductCard";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function ProductListingPage({ category }) {
-  const url = `${API_BASE_URL}/products/by-category/${category}`;
+  const url = `${API_BASE_URL}/products/by_category/${category}`;
   const { finalData } = useFetch(url);
   const [filteredData, setFilteredData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");

@@ -37,7 +37,7 @@ export default function ProductDetails() {
 
   async function wishlistHandler() {
     productData.addedToWishlist = !productData.addedToWishlist;
-    const url = `${API_BASE_URL}/products/toggle-wishlist/${productData._id}`;
+    const url = `${API_BASE_URL}/products/toggle_wishlist/${productData._id}`;
     await fetch(url, {
       method: "PATCH",
     })
@@ -62,7 +62,7 @@ export default function ProductDetails() {
   }
 
   async function addToCartHandler() {
-    const url = `${API_BASE_URL}/products/add-to-cart/${productData._id}/${sizeSelected}`;
+    const url = `${API_BASE_URL}/products/add_to_cart/${productData._id}/${sizeSelected}`;
     await fetch(url, {
       method: "POST",
     })

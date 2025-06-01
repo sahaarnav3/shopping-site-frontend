@@ -16,7 +16,7 @@ export default function ProductCard({ productData }) {
       ...productDetails,
       addedToWishlist: !productDetails.addedToWishlist,
     });
-    const url = `${API_BASE_URL}/products/toggle-wishlist/${productDetails._id}`;
+    const url = `${API_BASE_URL}/products/toggle_wishlist/${productDetails._id}`;
     await fetch(url, {
       method: "PATCH",
     })

@@ -27,7 +27,7 @@ export default function Profile() {
   useEffect(() => {
     if (showOrderHistory) {
       const apiUrl =
-        `${API_BASE_URL}/orders/get-all-orders`;
+        `${API_BASE_URL}/orders/get_all_orders`;
       fetch(apiUrl)
         .then((response) => response.json())
         .then((data) => {
@@ -52,7 +52,7 @@ export default function Profile() {
   useEffect(() => {
     const timeOut = setTimeout(() => {
       const apiUrl =
-        `${API_BASE_URL}/address/get-all-address`;
+        `${API_BASE_URL}/address/get_all_address`;
       fetch(apiUrl)
         .then((response) => {
           if (response.status === 200) return response.json();
@@ -70,7 +70,7 @@ export default function Profile() {
 
   function addNewAddressHandler() {
     const apiUrl =
-      `${API_BASE_URL}/address/add-new-address`;
+      `${API_BASE_URL}/address/add_new_address`;
 
     const addressObject = {
       name: name,
@@ -111,7 +111,7 @@ export default function Profile() {
   }
 
   function deleteAddressHandler(addressId, defaultAddressStatus) {
-    const apiUrl = `${API_BASE_URL}/address/delete-address/${addressId}`;
+    const apiUrl = `${API_BASE_URL}/address/delete_address/${addressId}`;
     if (defaultAddressStatus) return;
     fetch(apiUrl, {
       method: "DELETE",
@@ -127,7 +127,7 @@ export default function Profile() {
   }
 
   function setAsDefaultAddressHandler(addressId) {
-    const apiUrl = `${API_BASE_URL}/address/edit-default/${addressId}`;
+    const apiUrl = `${API_BASE_URL}/address/edit_default/${addressId}`;
     fetch(apiUrl, {
       method: "PATCH",
     })

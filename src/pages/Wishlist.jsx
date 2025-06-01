@@ -8,7 +8,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function Wishlist() {
   const { finalData: wishlistItems } = useFetch(
-    `${API_BASE_URL}/products/wishlist-items/wishlist`
+    `${API_BASE_URL}/products/wishlist_items/wishlist`
   );
 
   return (

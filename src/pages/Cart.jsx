@@ -26,7 +26,7 @@ export default function Cart() {
   } = useProductContext();
 
   const apiUrl =
-    `${API_BASE_URL}/products/get-cart-items/cart`;
+    `${API_BASE_URL}/products/get_cart_items/cart`;
   const { finalData, setFinalData } = useFetch(apiUrl);
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function Cart() {
   useEffect(() => {
     const timeOut = setTimeout(() => {
       const apiUrl =
-        `${API_BASE_URL}/address/fetch-default-address`;
+        `${API_BASE_URL}/address/fetch_default_address`;
       fetch(apiUrl)
         .then((response) => {
           if (response.status === 200) return response.json();
@@ -62,7 +62,7 @@ export default function Cart() {
   }, []);
 
   async function removeFromCartHandler(prodId, specs) {
-    const removeApiUrl = `${API_BASE_URL}/products/remove-from-cart/${prodId}/${specs}`;
+    const removeApiUrl = `${API_BASE_URL}/products/remove_from_cart/${prodId}/${specs}`;
     await fetch(removeApiUrl, {
       method: "POST",
     })
@@ -85,7 +85,7 @@ export default function Cart() {
   }
 
   async function wishlistHandler(prodId, addedToWishlistStatus) {
-    const url = `${API_BASE_URL}/products/toggle-wishlist/${prodId}`;
+    const url = `${API_BASE_URL}/products/toggle_wishlist/${prodId}`;
     await fetch(url, {
       method: "PATCH",
     })
@@ -120,7 +120,7 @@ export default function Cart() {
 
     try {
       const orderRes = await fetch(
-        `${API_BASE_URL}/orders/create-new-order`,
+        `${API_BASE_URL}/orders/create_new_order`,
         {
           method: "POST",
           body: JSON.stringify(finalOrderData),
@@ -132,7 +132,7 @@ export default function Cart() {
 
       if (orderRes.status === 200) {
         const removeRes = await fetch(
-          `${API_BASE_URL}/products/remove-all-cart-items`,
+          `${API_BASE_URL}/products/remove_all_cart_items`,
           {
             method: "PATCH",
           }

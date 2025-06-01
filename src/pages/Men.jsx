@@ -10,7 +10,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function Men() {
   const url =
-    `${API_BASE_URL}/products/by-category/men`;
+    `${API_BASE_URL}/products/by_category/men`;
   const { finalData } = useFetch(url);
   const [filteredData, setFilteredData] = useState([]);
 
