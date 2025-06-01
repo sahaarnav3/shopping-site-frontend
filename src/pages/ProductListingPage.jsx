@@ -53,10 +53,12 @@ export default function ProductListingPage({ category }) {
               </div>
             )}
           </h4>
-          <div className="row justify-content-between gy-4 px-3">
+          <div className="d-flex flex-wrap justify-content-start">
             {filteredData != null
               ? filteredData.map((prodData) => (
-                  <ProductCard key={prodData._id} productData={prodData} />
+                  <div className="my-3 me-4" key={prodData._id}>
+                    <ProductCard key={prodData._id} productData={prodData} />
+                  </div>
                 ))
               : ""}
           </div>

@@ -14,17 +14,19 @@ export default function Wishlist() {
   return (
     <>
       <Navbar showsearch={false} />
-      <main className="bg-light pb-5">
+      <main className="bg-body-secondary pb-5" style={{ minHeight: "54em", minWidth: "22em" }}>
         <section className="container py-4">
           <h4 className="text-center">
             <strong>My Wishlist</strong>
           </h4>
-          <div className="row justify-content-between gy-4 mt-3 mb-5">
+          <div className="container d-flex flex-wrap justify-content-start gy-4 mt-4 mb-5"> 
             {wishlistItems != null
               ? wishlistItems.data.product.map((prodData) => (
-                  <ProductCard key={prodData._id} productData={prodData} />
+                  <div className="my-2 mx-3" key={prodData._id}>
+                    <ProductCard key={prodData._id} productData={prodData} />
+                  </div>
                 ))
-              : ""}
+              : <h2>Loading...</h2>}
           </div>
         </section>
       </main>
