@@ -7,7 +7,7 @@ Built with a React frontend, Express/Node backend and MongoDB database.
 
 ## Demo Link
 
-[Live Demo](https://shopping-site-backend-mocha.vercel.app/)  
+[Live Demo](https://shopping-site-frontend-ivory.vercel.app/)  
 
 --- 
 
